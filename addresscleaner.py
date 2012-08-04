@@ -2,12 +2,15 @@
 
 import re
 import sys
-from csv import DictReader
+import csv
 from repl.addr import replDict
 
-def strip_term(str):
-    strip_pattern = re.compile('[\W ]+')
-    return strip_pattern.sub('', str)
+def strip_term(stripstr, leave_spaces=False):
+    if leave_spaces:
+        strip_pattern = re.compile('[\W ]+')
+    else:
+        strip_pattern = re.compile('[\W]+')
+    return strip_pattern.sub('', stripstr)
     
 def clean_addy(str):
     terms = str.split(' ')
@@ -19,7 +22,7 @@ def clean_addy(str):
     return " ".join(terms)
 
 def get_addy_start(v):
-    ltrs = [l for l in strip_term(v)]
+    ltrs = [l for l in strip_term(v, leave_spaces=True)]
     res = ""
     while len(ltrs) and ltrs[0].isdigit():
         res += ltrs.pop(0)
@@ -40,22 +43,24 @@ def go():
         fieldname = "Address Text"
         idname = "Address ID"
     
-    inf = open(infile, 'r')
-    res = DictReader(inf)
+    inf = open(infile, 'rU')
+    res = csv.DictReader(inf)
     
     out = open(outfile, 'w')
-    out.write('Row ID\tOriginal Address\tClean Address\tAddress Start\n')
     
-    for row in res:
-        t = row[fieldname]
-        out.write('%s\t%s\t%s\n' % (row[idname], t, clean_addy(t), get_addy_start(t)))
+    with open(outfile, 'wb') as out:
+        writer = csv.writer(out)
+        writer.writerow(["Row ID", "Original Address", "Clean Address", "Address Start"])
+
+        for row in res:
+            t = row[fieldname]
+            writer.writerow([row[idname], t, clean_addy(t), get_addy_start(t)])
     
     inf.close()
-    out.close()
 
     print("ADDRESS CLEANER")
     print("===============")
-    print("I read everything from %s, cleaned up the addresses and wrote them into %s." % infile, outfile)
+    print("I read everything from %s, cleaned up the addresses and wrote them into %s." % (infile, outfile))
 
 if __name__=="__main__":
     go()
