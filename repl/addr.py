@@ -376,6 +376,3 @@ replDict = {
             "WELLS":  "WLS",
             "WY":  "WAY"
 }
-
-#e = d.copy()
-#d.update(e)
