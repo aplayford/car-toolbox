@@ -1,4 +1,8 @@
-## A simple tool to take a .csv containing address data and to generate a set of "cleaned" addresses that can be used in Access.
+# A simple tool to take a .csv containing address data and to generate a set of "cleaned" addresses that can be used in Access.
+#
+# To-do:
+# 1) Think about: How to clean up 3rd so it will also match third? What about 4th Street versus 4 Street? Can we write one-off code to handle?
+# 2) The leave_spaces flag in strip_term() is broken. (\W matches a space regardless.)
 
 import re
 import sys
