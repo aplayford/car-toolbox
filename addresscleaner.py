@@ -50,8 +50,6 @@ def go():
     inf = open(infile, 'rU')
     res = csv.DictReader(inf)
     
-    out = open(outfile, 'w')
-    
     with open(outfile, 'wb') as out:
         writer = csv.writer(out)
         writer.writerow(["Row ID", "Original Address", "Clean Address", "Address Start"])
