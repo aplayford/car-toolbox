@@ -1,4 +1,7 @@
-# A simple tool to take a .csv containing address data and to generate a set of "cleaned" addresses that can be used in Access.
+#!/usr/bin/env python
+
+# A simple tool to take a .csv containing address data and to generate a set of "cleaned" addresses that can be used for joins.
+
 #
 # To-do:
 # 1) Think about: How to clean up 3rd so it will also match third? What about 4th Street versus 4 Street? Can we write one-off code to handle?
