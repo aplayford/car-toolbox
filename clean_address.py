@@ -12,11 +12,8 @@ import sys
 import csv
 from repl.addr import replDict
 
-def strip_term(stripstr, leave_spaces=False):
-    if leave_spaces:
-        strip_pattern = re.compile('[\W ]+')
-    else:
-        strip_pattern = re.compile('[\W]+')
+def strip_term(stripstr):
+    strip_pattern = re.compile('[\W]+')
     return strip_pattern.sub('', stripstr)
     
 def clean_addy(str):
@@ -29,11 +26,14 @@ def clean_addy(str):
     return " ".join(terms)
 
 def get_addy_start(v):
-    ltrs = [l for l in strip_term(v, leave_spaces=True)]
+    ltrs = [l for l in strip_term(v.split(' ')[0])]
     res = ""
     while len(ltrs) and ltrs[0].isdigit():
         res += ltrs.pop(0)
     return res
+
+def get_addy_numbers(v):
+    return "".join([l for l in v if l.isdigit()])
 
 def go():
     if not len(sys.argv) in (3, 5):
